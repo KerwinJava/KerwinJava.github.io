@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
+title: Kerwin's blog
+subtitle: 'code | life'
 description: ''
-keywords:
-author: John Doe
-language: zh_CN
+keywords: 
+author: kerwin
+language: zh-CN
 timezone: ''
 
 # URL
