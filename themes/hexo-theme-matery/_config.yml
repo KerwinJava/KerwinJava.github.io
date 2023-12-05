@@ -338,8 +338,8 @@ gitalk:
   owner: KerwinJava
   repo: KerwinJava.github.io
   oauth:
-    clientId: 3f451ac9e3b9ec59349b
-    clientSecret: 00f6b4f7509880cd4ca7d8a8c40c98caa6e56d93
+    clientId: ***
+    clientSecret: ***
   admin: KerwinJava
 
 # the Gitment config，default disabled
@@ -377,8 +377,8 @@ tcaptcha:
 # Valine 评论模块的配置，默认为不激活，如要使用，就请激活该配置项，并设置 appId 和 appKey.
 valine:
   enable: true
-  appId:  I0vDNjTKtOof5hmPPUZQ4KS4-gzGzoHsz
-  appKey: Ze2lo6UTw9oPt2sFTsP2O5BN
+  appId:  **
+  appKey: **
   serverURLs: https://i0vdnjtk.lc-cn-n1-shared.com
   notify: false
   verify: false
