@@ -1,7 +1,12 @@
 ---
 title: 原来springboot启动这么简单
 date: 2023-12-05 15:25:09
-tags:
+tags: 
+- 博客
+- springboot
+- 源码
+categories:
+- springboot源码
 ---
 
 
