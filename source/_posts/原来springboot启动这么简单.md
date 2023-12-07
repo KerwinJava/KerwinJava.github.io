@@ -13,14 +13,11 @@ categories:
 ### 项目环境搭建
 纵观江湖，搭建一座Spring Boot项目，实为易如反掌，大可有二法:
 首法，在  [spring](https://start.spring.io/) 之乡，或 [阿里](https://start.aliyun.com/)巨头之邦，得获其提供之脚手架工具，登高一呼，则代码自动落肆。可犹阔以在网页上操作，简揽诸多选项，而后手握IDE，便可快捷地揭开项目的序幕。次法，则为手搭之方，倚重于Maven、Gradle，或Ant等构筑工巧。我在此略列其要领（惟就Maven而言）：初辟工程，谓之立项目；嵌入Spring Boot依赖，诸如spring-boot-starter-parent父项，及spring-boot-starter-web等，需一一批注于pom.xml中。主启动类亦异曲同工，以@SpringBootApplication为尊，义不容辞；从而顺着股肱血脉，引领开发之路:
- 	
 
-1.  	创建一个新的Maven项目：在你的IDE中，选择创建一个新的Maven项目。确保你已经安装了Maven，并配置好了相关环境变量。 	
+1. 创建一个新的Maven项目：在你的IDE中，选择创建一个新的Maven项目。确保你已经安装了Maven，并配置好了相关环境变量。 	
+2. 添加Spring Boot依赖：在项目的pom.xml文件中，添加Spring Boot的依赖。 	
 
- 	
-
-2.  	添加Spring Boot依赖：在项目的pom.xml文件中，添加Spring Boot的依赖。 	 	
-```
+```java
 <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,7 +26,8 @@ categories:
         </dependency>
  </dependencies>
 ```
- 	![image.png](https://cdn.nlark.com/yuque/0/2023/gif/1475857/1701498019227-d23466d2-721b-4a4d-8831-11950c379f88.gif#averageHue=%23ffffff&clientId=u75b31b43-99ce-4&from=paste&id=u15a63c78&originHeight=1&originWidth=1&originalType=url&ratio=1&rotation=0&showTitle=false&size=43&status=done&style=none&taskId=uad10fbab-a9ef-48fb-8ee8-bd7be708caa&title=) 	或者 	 	
+
+或者 	 	
 ```
 <parent>
         <groupId>org.springframework.boot</groupId>
@@ -44,7 +42,7 @@ categories:
         </dependency>
     </dependencies>
 ```
- 	![image.png](https://cdn.nlark.com/yuque/0/2023/gif/1475857/1701498019259-ebeba23d-e3d1-4823-bb98-3ddf41dee448.gif#averageHue=%23ffffff&clientId=u75b31b43-99ce-4&from=paste&id=u6f334aa9&originHeight=1&originWidth=1&originalType=url&ratio=1&rotation=0&showTitle=false&size=43&status=done&style=none&taskId=u6be1a815-8f2f-442a-927f-50ea3d2534d&title=) 	或者 	 	
+ 或者 	 	
 ```
 <parent>
         <groupId>org.springframework.boot</groupId>
@@ -59,10 +57,10 @@ categories:
         </dependency>
     </dependencies>
 ```
- 	 	纵观这三种写法，实质上是相同的。spring-boot-dependencies和spring-boot-starter-parent本身并不提供任何依赖关系。spring-boot-dependencies通过定义dependencyManagement节点来管理相关的依赖项，从而使子项目能够忽略这些依赖项的版本号。spring-boot-starter-parent则是一种特殊的启动器，它在spring-boot-dependencies的基础上添加了一些Maven的默认配置和插件版本管理。 	而在dependencies中增加了spring-boot-starter-web依赖项，它会自动引入Web项目所需的一些基本依赖，从而让我们可以开始开发自己的业务了。 	 	
+ 纵观这三种写法，实质上是相同的。spring-boot-dependencies和spring-boot-starter-parent本身并不提供任何依赖关系。spring-boot-dependencies通过定义dependencyManagement节点来管理相关的依赖项，从而使子项目能够忽略这些依赖项的版本号。spring-boot-starter-parent则是一种特殊的启动器，它在spring-boot-dependencies的基础上添加了一些Maven的默认配置和插件版本管理。 	而在dependencies中增加了spring-boot-starter-web依赖项，它会自动引入Web项目所需的一些基本依赖，从而让我们可以开始开发自己的业务了。 	 	
  	
 
-3.  	编写主启动类：在项目中创建一个主启动类，作为springboot应用的入口点。 	 	
+3.编写主启动类：在项目中创建一个主启动类，作为springboot应用的入口点。 	 	
 ```java
 @RestController
 @EnableAutoConfiguration
@@ -79,7 +77,7 @@ public class Example {
     }
 }
 ```
- 	![image.png](https://cdn.nlark.com/yuque/0/2023/gif/1475857/1701498019241-22860e92-0ddd-455b-a704-ee9c8c5a4899.gif#averageHue=%23ffffff&clientId=u75b31b43-99ce-4&from=paste&id=u4dcf7d58&originHeight=1&originWidth=1&originalType=url&ratio=1&rotation=0&showTitle=false&size=43&status=done&style=none&taskId=u3681d3e6-3306-4ae4-be06-bd20c0c8a3f&title=) 	
+
 顷刻便可启动整个项目，到浏览器中博览一番，再将业务逻辑铸成，便可依托巨室，傲视群雄，谱写自己的传奇。
 若是仍有不解之谜，惟有再次请教也。
 ### 启动流程
