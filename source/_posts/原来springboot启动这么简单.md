@@ -264,8 +264,8 @@ private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoad
 3.加载SpringApplicationRunListener实现并依次执行starting方法
 在启动的过程中，会根据时机依次调用started、environmentPrepared、contextPrepared、running方法
 4.解析命令行参数
-![](https://cdn.nlark.com/yuque/0/2023/png/1475857/1701498019460-b6ae0374-254e-4816-957c-88ba911c607c.png#averageHue=%232e3238&clientId=u75b31b43-99ce-4&from=paste&id=u1cf75da8&originHeight=192&originWidth=712&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u63f91a41-fc4b-42dd-9d7f-15df76dda9a&title=)编辑
-![](https://cdn.nlark.com/yuque/0/2023/png/1475857/1701498019441-55268ebd-4999-46ac-8501-6cf5284fd5ee.png#averageHue=%2321242a&clientId=u75b31b43-99ce-4&from=paste&id=ua705351f&originHeight=697&originWidth=891&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u28098980-7227-4779-a271-273037e86b2&title=)编辑
+![参数配置](./原来springboot启动这么简单/001.png)
+![](./原来springboot启动这么简单/002.png)
 5.准备环境
 
 ```java
