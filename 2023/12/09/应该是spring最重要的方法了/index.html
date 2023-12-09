@@ -460,9 +460,9 @@
  */</span>
 <span class="token keyword">void</span> <span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">,</span> <span class="token class-name">IllegalStateException</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/.%5C%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86%5C001.png" alt="方法实现"></p>
+<p><img src="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/001.png" alt="方法实现"></p>
 <p>结合UML类图看一下内部关系</p>
-<p><img src="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/.%5C%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86%5Cuml-class.png" alt="uml类图"></p>
+<p><img src="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/uml-class.png" alt="uml类图"></p>
 <p>让我们把重心放到AbstractApplicationContext这个类的实现上来，除了ComplexWebApplicationContext和SimpleWebApplicationContext外，所有其他web容器都会调用这里的refresh方法来完成容器的初始化。</p>
 <pre class="line-numbers language-none"><code class="language-none">public void refresh() throws BeansException, IllegalStateException &#123;
     synchronized (this.startupShutdownMonitor) &#123;
