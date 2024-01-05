@@ -94,6 +94,14 @@ Elasticsearch Head 的直观界面和丰富功能使得用户可以更加方便�
 
 ![head-ok](./es就这么跑起来了/head-ok.png)
 
+**如果出现文档内容不显示，http请求报错，修改配置文件解决**
+
+> 进入head插件安装目录 ，编辑/usr/src/app/_site/vendor.js;修改共有两处
+>
+> 第6886行 : contentType: "application/x-www-form-urlencoded改为 contentType: “application/json;charset=UTF-8”
+>
+> 第7573行: var inspectData = s.contentType === “application/x-www-form-urlencoded” &&改为 var inspectData = s.contentType === “application/json;charset=UTF-8
+
 ##### kibana
 
 ###### 简介
