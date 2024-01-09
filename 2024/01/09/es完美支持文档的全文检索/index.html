@@ -5,9 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="es完美支持文档的全文检索, Kerwin&#39;s blog">
-    <meta name="description" content="1.安装插件ingest-attachment，点击下载bin/elasticsearch-plugin install file:///data/ingest-attachment-7.9.0.zip
+    <meta name="description" content="1.安装插件ingest-attachment，点击下载
+bin/elasticsearch-plugin install file:///data/ingest-attachment-7.9.0.zip
 
-2.定义文本抽取管道，对入库文档的">
+2.定义文本抽取管道对入库文档的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -408,14 +409,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    505
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    7 分
                 </div>
                 
 
@@ -438,9 +439,10 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="1-安装插件ingest-attachment，点击下载"><a href="#1-安装插件ingest-attachment，点击下载" class="headerlink" title="1.安装插件ingest-attachment，点击下载"></a>1.安装插件ingest-attachment，<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-attachment/ingest-attachment-7.9.3.zip.">点击下载</a></h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bin/elasticsearch-plugin <span class="token function">install</span> file:///data/ingest-attachment-7.9.0.zip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h4 id="1-安装插件"><a href="#1-安装插件" class="headerlink" title="1.安装插件"></a>1.安装插件</h4><p>ingest-attachment，<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-attachment/ingest-attachment-7.9.3.zip.">点击下载</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bin/elasticsearch-plugin <span class="token function">install</span> file:///data/ingest-attachment-7.9.0.zip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>2.定义文本抽取管道，对入库文档的指定字段作为文档文件进行文本抽取</p>
+<h4 id="2-定义文本抽取管道"><a href="#2-定义文本抽取管道" class="headerlink" title="2.定义文本抽取管道"></a>2.定义文本抽取管道</h4><p>对入库文档的指定字段作为文档文件进行文本抽取</p>
 <p><img src="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/doc_upload.png" alt="image-20231212095312061"></p>
 <pre class="line-numbers language-none"><code class="language-none">
 PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
@@ -484,9 +486,8 @@ PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
 &#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>3.安装分词插件，<a target="_blank" rel="noopener" href="https://github.com/medcl/elasticsearch-analysis-ik/releases?page=8">下载地址</a>，跟上面一样安装，安装后重启</p>
-<p>4.建立文档结构映射</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">PUT /docwrite
+<h4 id="3-安装分词插件"><a href="#3-安装分词插件" class="headerlink" title="3.安装分词插件"></a>3.安装分词插件</h4><p><a target="_blank" rel="noopener" href="https://github.com/medcl/elasticsearch-analysis-ik/releases?page=8">下载地址</a>，跟上面一样安装，安装后重启</p>
+<h4 id="4-建立文档结构映射"><a href="#4-建立文档结构映射" class="headerlink" title="4.建立文档结构映射"></a>4.建立文档结构映射</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">PUT /docwrite
 <span class="token punctuation">&#123;</span>
   <span class="token string">"mappings"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
     <span class="token string">"properties"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
@@ -519,7 +520,7 @@ PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
   &quot;index&quot; : &quot;docwrite&quot;
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>6.上传文档，content填在<a target="_blank" rel="noopener" href="https://www.toolfk.com/tools/pdf-to-base64.html">网站</a>将pdf转化为base64编码后的值</p>
+<h4 id="5-上传文档"><a href="#5-上传文档" class="headerlink" title="5.上传文档"></a>5.上传文档</h4><p>content填在<a target="_blank" rel="noopener" href="https://www.toolfk.com/tools/pdf-to-base64.html">网站</a>将pdf转化为base64编码后的值</p>
 <pre class="line-numbers language-none"><code class="language-none">POST &#x2F;docwrite&#x2F;_doc?pipeline&#x3D;attachment
 &#123;
   &quot;name&quot;:&quot;阿里巴巴Java开发手册终极版v1.3.0&quot;,
@@ -568,6 +569,206 @@ PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
 &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/search_ok.png" alt="image-20231213143056962"></p>
+<ol start="5">
+<li><h4 id="项目集成"><a href="#项目集成" class="headerlink" title="项目集成"></a>项目集成</h4><p>添加依赖</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>elasticsearch<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>elasticsearch<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">7.9</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>exclusions<span class="token punctuation">></span></span>
+        <span class="token generics"><span class="token punctuation">&lt;</span>exclusion<span class="token punctuation">></span></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>log4j<span class="token operator">-</span>api<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+            <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>logging<span class="token punctuation">.</span>log4j<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>exclusion<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>exclusions<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span>
+<span class="token generics"><span class="token punctuation">&lt;</span>dependency<span class="token punctuation">></span></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>groupId<span class="token punctuation">></span></span>org<span class="token punctuation">.</span>elasticsearch<span class="token punctuation">.</span>client<span class="token operator">&lt;</span><span class="token operator">/</span>groupId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>artifactId<span class="token punctuation">></span></span>elasticsearch<span class="token operator">-</span>rest<span class="token operator">-</span>high<span class="token operator">-</span>level<span class="token operator">-</span>client<span class="token operator">&lt;</span><span class="token operator">/</span>artifactId<span class="token operator">></span>
+    <span class="token generics"><span class="token punctuation">&lt;</span>version<span class="token punctuation">></span></span><span class="token number">7.9</span><span class="token number">.0</span><span class="token operator">&lt;</span><span class="token operator">/</span>version<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>dependency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>新增配置</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#自定义配置</span>
+<span class="token key atrule">elasticsearch</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hosts</span><span class="token punctuation">:</span> 10.194.17.40<span class="token punctuation">:</span><span class="token number">9200</span>
+  <span class="token key atrule">scheme</span><span class="token punctuation">:</span> http
+  <span class="token key atrule">cluster-name</span><span class="token punctuation">:</span> single<span class="token punctuation">-</span>node<span class="token punctuation">-</span>cluster
+  <span class="token key atrule">user-name</span><span class="token punctuation">:</span> elastic
+  <span class="token key atrule">password</span><span class="token punctuation">:</span> elastic
+  <span class="token key atrule">connect-time-out</span><span class="token punctuation">:</span> <span class="token number">1000</span>
+  <span class="token key atrule">socket-time-out</span><span class="token punctuation">:</span> <span class="token number">30000</span>
+  <span class="token key atrule">connection-request-time-out</span><span class="token punctuation">:</span> <span class="token number">500</span>
+  <span class="token key atrule">max-connect-num</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">max-connect-num-per-route</span><span class="token punctuation">:</span> <span class="token number">100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>读取配置</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"elasticsearch"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ElasticseachConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// es host ip 地址（集群）</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> hosts<span class="token punctuation">;</span>
+    <span class="token comment">// es用户名</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> userName<span class="token punctuation">;</span>
+    <span class="token comment">// es密码</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> password<span class="token punctuation">;</span>
+    <span class="token comment">// es 请求方式</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> scheme<span class="token punctuation">;</span>
+    <span class="token comment">// es集群名称</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> clusterName<span class="token punctuation">;</span>
+    <span class="token comment">// es 连接超时时间</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> connectTimeOut<span class="token punctuation">;</span>
+    <span class="token comment">// es socket 连接超时时间</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> socketTimeOut<span class="token punctuation">;</span>
+    <span class="token comment">// es 请求超时时间</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> connectionRequestTimeOut<span class="token punctuation">;</span>
+    <span class="token comment">// es 最大连接数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> maxConnectNum<span class="token punctuation">;</span>
+    <span class="token comment">// es 每个路由的最大连接数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> maxConnectNumPerRoute<span class="token punctuation">;</span>
+
+
+    <span class="token comment">/**
+     * 如果@Bean没有指定bean的名称，那么这个bean的名称就是方法名
+     */</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"restHighLevelClient"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">RestHighLevelClient</span> <span class="token function">restHighLevelClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+        <span class="token comment">// 此处为单节点es</span>
+        <span class="token class-name">String</span> host <span class="token operator">=</span> hosts<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> port <span class="token operator">=</span> hosts<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token class-name">HttpHost</span> httpHost <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpHost</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span><span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>port<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 构建连接对象</span>
+        <span class="token class-name">RestClientBuilder</span> builder <span class="token operator">=</span> <span class="token class-name">RestClient</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span>httpHost<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 设置用户名、密码</span>
+        <span class="token class-name">CredentialsProvider</span> credentialsProvider <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BasicCredentialsProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        credentialsProvider<span class="token punctuation">.</span><span class="token function">setCredentials</span><span class="token punctuation">(</span><span class="token class-name">AuthScope</span><span class="token punctuation">.</span><span class="token constant">ANY</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">UsernamePasswordCredentials</span><span class="token punctuation">(</span>userName<span class="token punctuation">,</span>password<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 连接延时配置</span>
+        builder<span class="token punctuation">.</span><span class="token function">setRequestConfigCallback</span><span class="token punctuation">(</span>requestConfigBuilder <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+            requestConfigBuilder<span class="token punctuation">.</span><span class="token function">setConnectTimeout</span><span class="token punctuation">(</span>connectTimeOut<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            requestConfigBuilder<span class="token punctuation">.</span><span class="token function">setSocketTimeout</span><span class="token punctuation">(</span>socketTimeOut<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            requestConfigBuilder<span class="token punctuation">.</span><span class="token function">setConnectionRequestTimeout</span><span class="token punctuation">(</span>connectionRequestTimeOut<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> requestConfigBuilder<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 连接数配置</span>
+        builder<span class="token punctuation">.</span><span class="token function">setHttpClientConfigCallback</span><span class="token punctuation">(</span>httpClientBuilder <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+            httpClientBuilder<span class="token punctuation">.</span><span class="token function">setMaxConnTotal</span><span class="token punctuation">(</span>maxConnectNum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            httpClientBuilder<span class="token punctuation">.</span><span class="token function">setMaxConnPerRoute</span><span class="token punctuation">(</span>maxConnectNumPerRoute<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            httpClientBuilder<span class="token punctuation">.</span><span class="token function">setDefaultCredentialsProvider</span><span class="token punctuation">(</span>credentialsProvider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> httpClientBuilder<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RestHighLevelClient</span><span class="token punctuation">(</span>builder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>上传文件到前文建立的索引docwrite</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token class-name">RestHighLevelClient</span> client<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">uploadFile</span><span class="token punctuation">(</span><span class="token class-name">MultipartFile</span> file<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">FileObj</span> fileObj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileObj</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fileObj<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token constant">UUID</span><span class="token punctuation">.</span><span class="token function">randomUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fileObj<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fileObj<span class="token punctuation">.</span><span class="token function">setType</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token function">getContent</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//将文件内容转化为base64编码</span>
+    <span class="token class-name">String</span> base64 <span class="token operator">=</span> <span class="token class-name">Base64</span><span class="token punctuation">.</span><span class="token function">getEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">encodeToString</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    fileObj<span class="token punctuation">.</span><span class="token function">setContent</span><span class="token punctuation">(</span>base64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">IndexRequest</span> indexRequest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IndexRequest</span><span class="token punctuation">(</span><span class="token string">"docwrite"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//上传同时，使用attachment pipline进行提取文件</span>
+    indexRequest<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>fileObj<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">XContentType</span><span class="token punctuation">.</span><span class="token constant">JSON</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    indexRequest<span class="token punctuation">.</span><span class="token function">setPipeline</span><span class="token punctuation">(</span><span class="token string">"attachment"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name">IndexResponse</span> indexResponse<span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        indexResponse <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">index</span><span class="token punctuation">(</span>indexRequest<span class="token punctuation">,</span> <span class="token class-name">RequestOptions</span><span class="token punctuation">.</span><span class="token constant">DEFAULT</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>indexResponse<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getContent</span><span class="token punctuation">(</span><span class="token class-name">MultipartFile</span> file<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> datas <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//把指定文件内容写入缓冲输入流</span>
+            <span class="token class-name">FileInputStream</span> fis <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">FileInputStream</span><span class="token punctuation">)</span> file<span class="token punctuation">.</span><span class="token function">getInputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">BufferedInputStream</span> bis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedInputStream</span><span class="token punctuation">(</span>fis<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 以字节流的长度大小来定义数组大小</span>
+            datas <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">byte</span><span class="token punctuation">[</span>bis<span class="token punctuation">.</span><span class="token function">available</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token comment">//将pdf内容放到byte数组中</span>
+            bis<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>datas<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//关闭文件流</span>
+            bis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> datas<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>关键字查询</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">List</span> <span class="token function">search</span><span class="token punctuation">(</span><span class="token class-name">String</span> keyword<span class="token punctuation">)</span>  <span class="token punctuation">&#123;</span>
+    <span class="token class-name">List</span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">SearchSourceBuilder</span> srb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SearchSourceBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">HighlightBuilder</span> highlightBuilder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HighlightBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">HighlightBuilder<span class="token punctuation">.</span>Field</span> highlightContent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HighlightBuilder<span class="token punctuation">.</span>Field</span><span class="token punctuation">(</span><span class="token string">"attachment.content"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    highlightContent<span class="token punctuation">.</span><span class="token function">highlighterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    highlightBuilder<span class="token punctuation">.</span><span class="token function">field</span><span class="token punctuation">(</span>highlightContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    highlightBuilder<span class="token punctuation">.</span><span class="token function">preTags</span><span class="token punctuation">(</span><span class="token string">"&lt;em>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    highlightBuilder<span class="token punctuation">.</span><span class="token function">postTags</span><span class="token punctuation">(</span><span class="token string">"&lt;/em>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    srb<span class="token punctuation">.</span><span class="token function">highlighter</span><span class="token punctuation">(</span>highlightBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    srb<span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token class-name">QueryBuilders</span><span class="token punctuation">.</span><span class="token function">matchQuery</span><span class="token punctuation">(</span><span class="token string">"attachment.content"</span><span class="token punctuation">,</span> keyword<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">analyzer</span><span class="token punctuation">(</span><span class="token string">"ik_smart"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">SearchRequest</span> searchRequest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SearchRequest</span><span class="token punctuation">(</span><span class="token string">"docwrite"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    searchRequest<span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span>srb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">SearchResponse</span> searchResponse <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        searchResponse <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">search</span><span class="token punctuation">(</span>searchRequest<span class="token punctuation">,</span> <span class="token class-name">RequestOptions</span><span class="token punctuation">.</span><span class="token constant">DEFAULT</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">SearchHits</span> hits <span class="token operator">=</span> searchResponse<span class="token punctuation">.</span><span class="token function">getHits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">SearchHit</span><span class="token punctuation">[</span><span class="token punctuation">]</span> searchHits <span class="token operator">=</span> hits<span class="token punctuation">.</span><span class="token function">getHits</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">SearchHit</span> hit <span class="token operator">:</span> searchHits<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//原始数据，不包含高亮的数据</span>
+        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">></span></span> sourceMap <span class="token operator">=</span> hit<span class="token punctuation">.</span><span class="token function">getSourceAsMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//高亮数据</span>
+        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">HighlightField</span><span class="token punctuation">></span></span> highlightFields <span class="token operator">=</span> hit<span class="token punctuation">.</span><span class="token function">getHighlightFields</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">HighlightField</span> highlightTitle <span class="token operator">=</span> highlightFields<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"attachment.content"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//替换</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>highlightTitle <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token class-name">Text</span><span class="token punctuation">[</span><span class="token punctuation">]</span> fragments <span class="token operator">=</span> highlightTitle<span class="token punctuation">.</span><span class="token function">getFragments</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>fragments <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> fragments<span class="token punctuation">.</span>length <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                sourceMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"fragments"</span><span class="token punctuation">,</span> fragments<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>sourceMap<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//循环将数据添加入列表</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> list<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>查询“<strong>开发</strong>”结果展示</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"list"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"attachment"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token property">"date"</span><span class="token operator">:</span> <span class="token string">"2017-09-26T01:13:37Z"</span><span class="token punctuation">,</span>
+                <span class="token property">"content_type"</span><span class="token operator">:</span> <span class="token string">"application/pdf"</span><span class="token punctuation">,</span>
+                <span class="token property">"author"</span><span class="token operator">:</span> <span class="token string">"guanbao yang"</span><span class="token punctuation">,</span>
+                <span class="token property">"language"</span><span class="token operator">:</span> <span class="token string">"lt"</span><span class="token punctuation">,</span>
+                <span class="token property">"content"</span><span class="token operator">:</span> <span class="token string">"前言 \n\n《阿里巴巴 Java 开发手册》是阿里巴巴。。。。。。。n\n\t附1：版本历史\n\t附2：本手册专有名词"</span><span class="token punctuation">,</span>
+                <span class="token property">"content_length"</span><span class="token operator">:</span> <span class="token number">46498</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"阿里巴巴Java开发手册终极版v1.3.0"</span><span class="token punctuation">,</span>
+            <span class="token property">"fragments"</span><span class="token operator">:</span> <span class="token string">"前言 \n\n《阿里巴巴 Java &lt;em>开发&lt;/em>手册》是阿里巴巴集团技术团队的集体智慧结晶和经验总\n\n结，经历了多次大规模一线实战的检验及不断的完善，系统化地整理成册，反馈给广\n\n大开发者。"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"pdf"</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -1306,7 +1507,7 @@ PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">7.1k</span>
+                        class="white-color">8.1k</span>
             
             
             
