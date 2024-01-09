@@ -4,8 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="es就这么跑起来了, Kerwin&#39;s blog">
-    <meta name="description" content="背景在之前，领导安排了一个搭建文件管理系统的任务给同事，以支持全文检索功能，主要用于管理项目交付相关的文档。然而，由于时间紧迫，同事无法同时处理这项任务。另外，我之前负责带头设计、开发和改造公司几个产品，将它们从 Spring Boot 项">
+    <meta name="keywords" content="Kerwin&#39;s blog">
+    <meta name="description" content="1.安装插件ingest-attachment，点击下载
+bin/elasticsearch-plugin install file:///data/ingest-attachment-7.9.0.zip
+
+2.定义文本抽取管道，对入库文档">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>es就这么跑起来了 | Kerwin&#39;s blog</title>
+    <title>Kerwin&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -334,12 +337,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">es就这么跑起来了</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -361,29 +364,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/es/">
-                                <span class="chip bg-color">es</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
-                                <span class="chip bg-color">开源软件</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/elasticsearch/" class="post-category">
-                                elasticsearch
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -392,28 +378,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-11
+                    2024-01-09
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-01-05
+                    2024-01-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    505
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    2 分
                 </div>
                 
 
@@ -436,88 +422,137 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在之前，领导安排了一个搭建文件管理系统的任务给同事，以支持全文检索功能，主要用于管理项目交付相关的文档。然而，由于时间紧迫，同事无法同时处理这项任务。另外，我之前负责带头设计、开发和改造公司几个产品，将它们从 Spring Boot 项目迁移到微服务架构。在这个过程中，一直存在着日志监控的问题。因此，对 ELK 解决方案产生了浓厚的兴趣。因此，我主动接下了这个任务，接下来先研究一下这个开源组件吧。</p>
-<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><p>因为之前一直在使用 Docker 进行项目的安装和部署，对于定制化程度不高的软件来说，在网上找到镜像就可以轻松地运行起来，这非常方便。考虑到现阶段主要关注的是如何快速启动，而不是深入研究各个细节，我秉持着“怎么方便怎么来”的原则，先行动起来。</p>
-<h5 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h5><h6 id="简介"><a href="#简介" class="headerlink" title="简介"></a><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html">简介</a></h6><ol>
-<li><p>是一个分布式、免费和开放的搜索和分析引擎</p>
-<blockquote>
-<p>Elasticsearch is the distributed search and analytics engine at the heart of the Elastic Stack. </p>
-</blockquote>
-</li>
-<li><p>适用于所有类型的数据，包括文本、数字、地理空间、结构化和非结构化数据。</p>
-<blockquote>
-<p>Whether you have structured or unstructured text, numerical data, or geospatial data, Elasticsearch can efficiently store and index it in a way that supports fast searches.</p>
-</blockquote>
-</li>
-<li><p>使用java编写，基于Apache Lucene的搜索引擎</p>
-</li>
-</ol>
-<h6 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>​	拉取镜像</p>
-<blockquote>
-<p>docker pull elasticsearch:7.9.0</p>
-</blockquote>
-<p>​	启动</p>
-<blockquote>
-<p>docker run -d –name es -p 9200:9200 -p 9300:9300 elasticsearch:7.9.0</p>
-<p>9200是对外提供的http服务端口</p>
-<p>9300是集群内部节点间通讯端口</p>
-</blockquote>
-<p>​	修改配置</p>
-<pre class="line-numbers language-none"><code class="language-none">cluster.name: &quot;docker-cluster&quot;
-network.host: 0.0.0.0
-#以下为新增配置 主要是跨域访问的配置和集群配置 
-http.cors.enabled: true
-http.cors.allow-origin: &quot;*&quot;
-# minimum_master_nodes need to be explicitly set when bound on a public IP
-# set to 1 to allow single node clusters
-# Details: https:&#x2F;&#x2F;github.com&#x2F;elastic&#x2F;elasticsearch&#x2F;pull&#x2F;17288
-#因为需要使用elastic-head,所以开启集群配置
-discovery.zen.minimum_master_nodes: 1
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <p>1.安装插件ingest-attachment，<a target="_blank" rel="noopener" href="https://artifacts.elastic.co/downloads/elasticsearch-plugins/ingest-attachment/ingest-attachment-7.9.3.zip.">点击下载</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bin/elasticsearch-plugin <span class="token function">install</span> file:///data/ingest-attachment-7.9.0.zip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>​	验证</p>
-<blockquote>
-<p>修改完配置后重启es容器，稍等片刻，使用浏览器访问安装机器的9200端口，出现es相关信息就说明启动成功了</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/es-ok.png" alt="es-ok"></p>
-<h5 id="elasticsearch-head"><a href="#elasticsearch-head" class="headerlink" title="elasticsearch-head"></a>elasticsearch-head</h5><h6 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h6><p>Elasticsearch Head 是一个用于 Elasticsearch 集群管理和监控的 Web 界面插件。它提供了一个直观的用户界面，可以帮助用户轻松地监视集群的健康状况、索引的状态、节点的信息等。通过 Elasticsearch Head，用户可以方便地查看和管理集群中的数据、索引和节点，并进行一些基本的管理操作。这个插件通常以浏览器插件的形式存在，可以直接在浏览器中使用，而无需额外的安装步骤。</p>
-<p>Elasticsearch Head 的直观界面和丰富功能使得用户可以更加方便地监控和管理其 Elasticsearch 集群，有助于提高集群的稳定性和性能。</p>
-<h6 id="安装步骤-1"><a href="#安装步骤-1" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>作为插件主要有浏览器插件、es插件、单独进程这三种方式运行，如果以单独进程安装，那么应该还是可以以docker的方式进行。</p>
-<p>​	拉取镜像</p>
-<blockquote>
-<p>docker pull mobz&#x2F;elasticsearch-head:5</p>
-</blockquote>
-<p>​	启动</p>
-<blockquote>
-<p>docker run -d –name es_admin -p 9100:9100 mobz&#x2F;elasticsearch-head:5</p>
-</blockquote>
-<p>​	验证</p>
-<blockquote>
-<p>使用浏览器访问9100端口，可以看到如下界面，即安装成功</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/head-ok.png" alt="head-ok"></p>
-<p><strong>如果出现文档内容不显示，http请求报错，修改配置文件解决</strong></p>
-<blockquote>
-<p>进入head插件安装目录 ，编辑&#x2F;usr&#x2F;src&#x2F;app&#x2F;_site&#x2F;vendor.js;修改共有两处</p>
-<p>第6886行 : contentType: “application&#x2F;x-www-form-urlencoded改为 contentType: “application&#x2F;json;charset&#x3D;UTF-8”</p>
-<p>第7573行: var inspectData &#x3D; s.contentType &#x3D;&#x3D;&#x3D; “application&#x2F;x-www-form-urlencoded” &amp;&amp;改为 var inspectData &#x3D; s.contentType &#x3D;&#x3D;&#x3D; “application&#x2F;json;charset&#x3D;UTF-8</p>
-</blockquote>
-<h5 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h5><h6 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h6><p>Kibana 是一个开源的数据可视化工具，通常与 Elasticsearch 一起使用，用于分析、搜索和交互式地浏览存储在 Elasticsearch 中的数据。Kibana 提供了丰富的图表、表格、地图等可视化组件，用户可以利用这些组件来创建仪表盘、报表和实时数据监控界面。除了数据可视化外，Kibana 还提供了强大的搜索功能和数据分析工具，帮助用户更好地理解和利用其数据。</p>
-<p>通过 Kibana，用户可以轻松地构建各种数据可视化界面，从而更直观地理解数据、发现数据中的模式和趋势，并进行实时的数据监控和分析。Kibana 的灵活性和丰富的功能使其成为了许多企业和组织在数据分析和可视化方面的首选工具。</p>
-<h6 id="安装步骤-2"><a href="#安装步骤-2" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>拉取镜像</p>
-<blockquote>
-<p>docker pull kibana:7.9.0</p>
-</blockquote>
-<p>启动</p>
-<blockquote>
-<p>docker run –name kibana -e ELASTICSEARCH_HOSTS&#x3D;<a target="_blank" rel="noopener" href="http://10.194.17.40:9200/">http://10.194.17.40:9200</a> -p 5601:5601 -d kibana:7.9.0</p>
-<p>5601是页面访问端口</p>
-</blockquote>
-<p>验证</p>
-<blockquote>
-<p>使用浏览器访问5601端口</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/kibana-ok.png" alt="kibana-ok"></p>
+<p>2.定义文本抽取管道，对入库文档的指定字段作为文档文件进行文本抽取</p>
+<p><img src="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/doc_upload.png" alt="image-20231212095312061"></p>
+<pre class="line-numbers language-none"><code class="language-none">
+PUT &#x2F;_ingest&#x2F;pipeline&#x2F;attachment
+&#123;
+  &quot;description&quot;: &quot;Extract attachment information&quot;,
+  &quot;processors&quot;: [
+    &#123;
+      &quot;attachment&quot;: &#123;
+        &quot;field&quot;: &quot;content&quot;,
+        &quot;ignore_missing&quot;: true
+      &#125;
+    &#125;,
+    &#123;
+      &quot;remove&quot;: &#123;
+        &quot;field&quot;: &quot;content&quot;
+      &#125;
+    &#125;
+  ]
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>返回报错</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;error&quot; : &#123;
+    &quot;root_cause&quot; : [
+      &#123;
+        &quot;type&quot; : &quot;parse_exception&quot;,
+        &quot;reason&quot; : &quot;No processor type exists with name [attachment]&quot;,
+        &quot;processor_type&quot; : &quot;attachment&quot;
+      &#125;
+    ],
+    &quot;type&quot; : &quot;parse_exception&quot;,
+    &quot;reason&quot; : &quot;No processor type exists with name [attachment]&quot;,
+    &quot;processor_type&quot; : &quot;attachment&quot;
+  &#125;,
+  &quot;status&quot; : 400
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>看来是插件没生效，安装插件后es没有重启，重启一下试试，好了</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;acknowledged&quot; : true
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>3.安装分词插件，<a target="_blank" rel="noopener" href="https://github.com/medcl/elasticsearch-analysis-ik/releases?page=8">下载地址</a>，跟上面一样安装，安装后重启</p>
+<p>4.建立文档结构映射</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">PUT /docwrite
+<span class="token punctuation">&#123;</span>
+  <span class="token string">"mappings"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"properties"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token string">"id"</span>:<span class="token punctuation">&#123;</span>
+        <span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"keyword"</span>
+      <span class="token punctuation">&#125;</span>,
+      <span class="token string">"name"</span>:<span class="token punctuation">&#123;</span>
+        <span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"text"</span>,
+        <span class="token string">"analyzer"</span><span class="token builtin class-name">:</span> <span class="token string">"ik_max_word"</span>
+      <span class="token punctuation">&#125;</span>,
+      <span class="token string">"type"</span>:<span class="token punctuation">&#123;</span>
+        <span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"keyword"</span>
+      <span class="token punctuation">&#125;</span>,
+      <span class="token string">"attachment"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"properties"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span>
+          <span class="token string">"content"</span>:<span class="token punctuation">&#123;</span>
+            <span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"text"</span>,
+            <span class="token string">"analyzer"</span><span class="token builtin class-name">:</span> <span class="token string">"ik_smart"</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>成功后返回</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;acknowledged&quot; : true,
+  &quot;shards_acknowledged&quot; : true,
+  &quot;index&quot; : &quot;docwrite&quot;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>6.上传文档，content填在<a target="_blank" rel="noopener" href="https://www.toolfk.com/tools/pdf-to-base64.html">网站</a>将pdf转化为base64编码后的值</p>
+<pre class="line-numbers language-none"><code class="language-none">POST &#x2F;docwrite&#x2F;_doc?pipeline&#x3D;attachment
+&#123;
+  &quot;name&quot;:&quot;阿里巴巴Java开发手册终极版v1.3.0&quot;,
+  &quot;type&quot;:&quot;pdf&quot;,
+  &quot;content&quot;:&quot;&quot;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>返回结果</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+  &quot;_index&quot; : &quot;docwrite&quot;,
+  &quot;_type&quot; : &quot;_doc&quot;,
+  &quot;_id&quot; : &quot;meI8XYwB_xVMUTjzn8MT&quot;,
+  &quot;_version&quot; : 1,
+  &quot;result&quot; : &quot;created&quot;,
+  &quot;_shards&quot; : &#123;
+    &quot;total&quot; : 2,
+    &quot;successful&quot; : 1,
+    &quot;failed&quot; : 0
+  &#125;,
+  &quot;_seq_no&quot; : 0,
+  &quot;_primary_term&quot; : 1
+&#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>查询下,可以看到文档上传成功了</p>
+<p><img src="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/doc_upload.png" alt="image-20231212170750310"></p>
+<p>按关键字查询</p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;docwrite&#x2F;_search
+&#123;
+  &quot;highlight&quot;: &#123;
+    &quot;fields&quot;: &#123;&quot;attachment.content&quot;: &#123;
+      &quot;pre_tags&quot;: [&quot;&lt;em&gt;&quot;],
+        &quot;post_tags&quot;: [&quot;&lt;&#x2F;em&gt;&quot;]
+    &#125;&#125;
+  &#125;, 
+  &quot;query&quot;: &#123;
+    
+    &quot;match&quot;: &#123;
+    
+      &quot;attachment.content&quot;: &#123;
+        &quot;query&quot;: &quot;微服务&quot;,
+        &quot;analyzer&quot;: &quot;ik_smart&quot;
+      &#125;
+    &#125;
+  &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/search_ok.png" alt="image-20231213143056962"></p>
 
                 
             </div>
@@ -544,7 +579,7 @@ discovery.zen.minimum_master_nodes: 1
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://kerwinjava.github.io/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/">https://kerwinjava.github.io/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/</a>
+                    <a href="https://kerwinjava.github.io/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">https://kerwinjava.github.io/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -581,15 +616,7 @@ discovery.zen.minimum_master_nodes: 1
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/es/">
-                                    <span class="chip bg-color">es</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
-                                    <span class="chip bg-color">开源软件</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -665,7 +692,7 @@ discovery.zen.minimum_master_nodes: 1
         repo: 'KerwinJava.github.io',
         owner: 'KerwinJava',
         admin: "KerwinJava",
-        id: '2023-12-11T16-18-09',
+        id: '2024-01-09T14-26-32',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -960,9 +987,10 @@ discovery.zen.minimum_master_nodes: 1
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">
                     <div class="card-image">
@@ -980,9 +1008,9 @@ discovery.zen.minimum_master_nodes: 1
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -991,6 +1019,7 @@ discovery.zen.minimum_master_nodes: 1
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1001,13 +1030,13 @@ discovery.zen.minimum_master_nodes: 1
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/">
+                <a href="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="应该是Spring最重要的方法了">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="es就这么跑起来了">
                         
-                        <span class="card-title">应该是Spring最重要的方法了</span>
+                        <span class="card-title">es就这么跑起来了</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1018,14 +1047,14 @@ discovery.zen.minimum_master_nodes: 1
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/springboot%E6%BA%90%E7%A0%81/" class="post-category">
-                                    springboot源码
+                            <a href="/categories/elasticsearch/" class="post-category">
+                                    elasticsearch
                                 </a>
                             
                             
@@ -1035,16 +1064,12 @@ discovery.zen.minimum_master_nodes: 1
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2/">
-                        <span class="chip bg-color">博客</span>
+                    <a href="/tags/es/">
+                        <span class="chip bg-color">es</span>
                     </a>
                     
-                    <a href="/tags/springboot/">
-                        <span class="chip bg-color">springboot</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%BA%90%E7%A0%81/">
-                        <span class="chip bg-color">源码</span>
+                    <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
+                        <span class="chip bg-color">开源软件</span>
                     </a>
                     
                 </div>
