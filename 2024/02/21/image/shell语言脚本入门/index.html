@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="es就这么跑起来了, Kerwin&#39;s blog">
-    <meta name="description" content="背景在之前，领导安排了一个搭建文件管理系统的任务给同事，以支持全文检索功能，主要用于管理项目交付相关的文档。然而，由于时间紧迫，同事无法同时处理这项任务。另外，我之前负责带头设计、开发和改造公司几个产品，将它们从 Spring Boot 项">
+    <meta name="keywords" content="shell语言脚本入门, Kerwin&#39;s blog">
+    <meta name="description" content="公司的微服务终于运行起来了，为了简化运维人员的工作量，又接下了一个大活，为部署提供一套可行的快速解决方案，这其中不可避免的会接触到很多脚本的编写，正好借着这个机会，可以把shell脚本系统的学习一下。
+shell语言Shell 是一个用 C">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>es就这么跑起来了 | Kerwin&#39;s blog</title>
+    <title>shell语言脚本入门 | Kerwin&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -334,12 +335,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">es就这么跑起来了</h1>
+                    <h1 class="description center-align post-title">shell语言脚本入门</h1>
                 </div>
             </div>
         </div>
@@ -363,12 +364,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/es/">
-                                <span class="chip bg-color">es</span>
+                            <a href="/tags/shell/">
+                                <span class="chip bg-color">shell</span>
                             </a>
                         
-                            <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
-                                <span class="chip bg-color">开源软件</span>
+                            <a href="/tags/linux/">
+                                <span class="chip bg-color">linux</span>
                             </a>
                         
                     </div>
@@ -379,8 +380,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/elasticsearch/" class="post-category">
-                                elasticsearch
+                            <a href="/categories/shell/" class="post-category">
+                                shell
+                            </a>
+                        
+                            <a href="/categories/shell/linux%E8%84%9A%E6%9C%AC/" class="post-category">
+                                linux脚本
                             </a>
                         
                     </div>
@@ -392,28 +397,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-11
+                    2024-02-21
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-01-05
+                    2024-02-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    3.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    14 分
                 </div>
                 
 
@@ -436,89 +441,553 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>在之前，领导安排了一个搭建文件管理系统的任务给同事，以支持全文检索功能，主要用于管理项目交付相关的文档。然而，由于时间紧迫，同事无法同时处理这项任务。另外，我之前负责带头设计、开发和改造公司几个产品，将它们从 Spring Boot 项目迁移到微服务架构。在这个过程中，一直存在着日志监控的问题。因此，对 ELK 解决方案产生了浓厚的兴趣。因此，我主动接下了这个任务，接下来先研究一下这个开源组件吧。</p>
-<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><p>因为之前一直在使用 Docker 进行项目的安装和部署，对于定制化程度不高的软件来说，在网上找到镜像就可以轻松地运行起来，这非常方便。考虑到现阶段主要关注的是如何快速启动，而不是深入研究各个细节，我秉持着“怎么方便怎么来”的原则，先行动起来。</p>
-<h5 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h5><h6 id="简介"><a href="#简介" class="headerlink" title="简介"></a><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html">简介</a></h6><ol>
-<li><p>是一个分布式、免费和开放的搜索和分析引擎</p>
-<blockquote>
-<p>Elasticsearch is the distributed search and analytics engine at the heart of the Elastic Stack. </p>
-</blockquote>
+                <p>公司的微服务终于运行起来了，为了简化运维人员的工作量，又接下了一个大活，为部署提供一套可行的快速解决方案，这其中不可避免的会接触到很多脚本的编写，正好借着这个机会，可以把shell脚本系统的学习一下。</p>
+<h4 id="shell语言"><a href="#shell语言" class="headerlink" title="shell语言"></a>shell语言</h4><p>Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁。Shell 既是一种命令语言，又是一种程序设计语言。</p>
+<p>Shell 语言通常指的是用于与操作系统交互的脚本语言，这些脚本语言被设计为与 Shell 解释器一起工作。Shell 是一种命令行界面，它允许用户输入命令来执行程序、管理文件系统、执行任务自动化等。<br>Shell 脚本是一种脚本语言，它使用 Shell 的命令和功能来执行任务。Shell 脚本通常以 .sh 扩展名保存，例如 script.sh。要运行这样的脚本，你需要有执行权限，并且可以使用以下命令：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">bash</span> script.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>或者，如果你直接运行脚本，如果它有执行权限，你可以使用：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;script.sh
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>Shell 编程跟 JavaScript、php 编程一样，只要有一个能编写代码的文本编辑器和一个能解释执行的脚本解释器就可以了。</p>
+<p>常见的解释器有：</p>
+<ul>
+<li><p>Bourne Shell（&#x2F;usr&#x2F;bin&#x2F;sh或&#x2F;bin&#x2F;sh）</p>
 </li>
-<li><p>适用于所有类型的数据，包括文本、数字、地理空间、结构化和非结构化数据。</p>
-<blockquote>
-<p>Whether you have structured or unstructured text, numerical data, or geospatial data, Elasticsearch can efficiently store and index it in a way that supports fast searches.</p>
-</blockquote>
+<li><p>Bourne Again Shell（&#x2F;bin&#x2F;bash）</p>
 </li>
-<li><p>使用java编写，基于Apache Lucene的搜索引擎</p>
+<li><p>C Shell（&#x2F;usr&#x2F;bin&#x2F;csh）</p>
 </li>
+<li><p>K Shell（&#x2F;usr&#x2F;bin&#x2F;ksh）</p>
+</li>
+<li><p>Shell for Root（&#x2F;sbin&#x2F;sh）</p>
+<p> Bash，也就是 Bourne Again Shell，由于易用和免费，Bash 在日常工作中被广泛使用。同时，Bash 也是大多数Linux 系统默认的 Shell。</p>
+<ol>
+<li><p>新建一个脚本</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">touch</span> test.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+</li>
+<li><p>编辑脚本，使用vi&#x2F;vim打开上面新建的文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash   #指定解释器</span>
+<span class="token builtin class-name">echo</span> <span class="token string">"Hello World !"</span>  <span class="token comment">#echo 命令用于向窗口输出文本。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>执行脚本</p>
+<pre class="line-numbers language-none"><code class="language-none">chmod +x test.sh #给脚本文件添加可执行权限
+ 
+.&#x2F;test.sh  #执行脚本文件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
 </ol>
-<h6 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>​	拉取镜像</p>
-<blockquote>
-<p>docker pull elasticsearch:7.9.0</p>
-</blockquote>
-<p>​	启动</p>
-<blockquote>
-<p>docker run -d –name es -p 9200:9200 -p 9300:9300 elasticsearch:7.9.0</p>
-<p>9200是对外提供的http服务端口</p>
-<p>9300是集群内部节点间通讯端口</p>
-</blockquote>
-<p>​	修改配置</p>
-<pre class="line-numbers language-none"><code class="language-none">cluster.name: &quot;docker-cluster&quot;
-network.host: 0.0.0.0
-#以下为新增配置 主要是跨域访问的配置和集群配置 
-http.cors.enabled: true
-http.cors.allow-origin: &quot;*&quot;
-# minimum_master_nodes need to be explicitly set when bound on a public IP
-# set to 1 to allow single node clusters
-# Details: https:&#x2F;&#x2F;github.com&#x2F;elastic&#x2F;elasticsearch&#x2F;pull&#x2F;17288
-#因为需要使用elastic-head,所以开启集群配置
-discovery.zen.minimum_master_nodes: 1
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h5><pre class="line-numbers language-none"><code class="language-none">text1&#x3D;&quot;say it&quot; #使用等号定义变量<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>​	验证</p>
-<blockquote>
-<p>修改完配置后重启es容器，稍等片刻，使用浏览器访问安装机器的9200端口，出现es相关信息就说明启动成功了</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/es-ok.png" alt="es-ok"></p>
-<h5 id="elasticsearch-head"><a href="#elasticsearch-head" class="headerlink" title="elasticsearch-head"></a>elasticsearch-head</h5><h6 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h6><p>Elasticsearch Head 是一个用于 Elasticsearch 集群管理和监控的 Web 界面插件。它提供了一个直观的用户界面，可以帮助用户轻松地监视集群的健康状况、索引的状态、节点的信息等。通过 Elasticsearch Head，用户可以方便地查看和管理集群中的数据、索引和节点，并进行一些基本的管理操作。这个插件通常以浏览器插件的形式存在，可以直接在浏览器中使用，而无需额外的安装步骤。</p>
-<p>Elasticsearch Head 的直观界面和丰富功能使得用户可以更加方便地监控和管理其 Elasticsearch 集群，有助于提高集群的稳定性和性能。</p>
-<h6 id="安装步骤-1"><a href="#安装步骤-1" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>作为插件主要有浏览器插件、es插件、单独进程这三种方式运行，如果以单独进程安装，那么应该还是可以以docker的方式进行。</p>
-<p>​	拉取镜像</p>
-<blockquote>
-<p>docker pull mobz&#x2F;elasticsearch-head:5</p>
-</blockquote>
-<p>​	启动</p>
-<blockquote>
-<p>docker run -d –name es_admin -p 9100:9100 mobz&#x2F;elasticsearch-head:5</p>
-</blockquote>
-<p>​	验证</p>
-<blockquote>
-<p>使用浏览器访问9100端口，可以看到如下界面，即安装成功</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/head-ok.png" alt="head-ok"></p>
-<p><strong>如果出现文档内容不显示，http请求报错，修改配置文件解决</strong></p>
-<blockquote>
-<p>进入head插件安装目录 ，编辑&#x2F;usr&#x2F;src&#x2F;app&#x2F;_site&#x2F;vendor.js;修改共有两处</p>
-<p>第6886行 : contentType: “application&#x2F;x-www-form-urlencoded改为 contentType: “application&#x2F;json;charset&#x3D;UTF-8”</p>
-<p>第7573行: var inspectData &#x3D; s.contentType &#x3D;&#x3D;&#x3D; “application&#x2F;x-www-form-urlencoded” &amp;&amp;改为 var inspectData &#x3D; s.contentType &#x3D;&#x3D;&#x3D; “application&#x2F;json;charset&#x3D;UTF-8</p>
-</blockquote>
-<h5 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h5><h6 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h6><p>Kibana 是一个开源的数据可视化工具，通常与 Elasticsearch 一起使用，用于分析、搜索和交互式地浏览存储在 Elasticsearch 中的数据。Kibana 提供了丰富的图表、表格、地图等可视化组件，用户可以利用这些组件来创建仪表盘、报表和实时数据监控界面。除了数据可视化外，Kibana 还提供了强大的搜索功能和数据分析工具，帮助用户更好地理解和利用其数据。</p>
-<p>通过 Kibana，用户可以轻松地构建各种数据可视化界面，从而更直观地理解数据、发现数据中的模式和趋势，并进行实时的数据监控和分析。Kibana 的灵活性和丰富的功能使其成为了许多企业和组织在数据分析和可视化方面的首选工具。</p>
-<h6 id="安装步骤-2"><a href="#安装步骤-2" class="headerlink" title="安装步骤"></a>安装步骤</h6><p>拉取镜像</p>
-<blockquote>
-<p>docker pull kibana:7.9.0</p>
-</blockquote>
-<p>启动</p>
-<blockquote>
-<p>docker run –name kibana -e ELASTICSEARCH_HOSTS&#x3D;<a target="_blank" rel="noopener" href="http://10.194.17.40:9200/">http://10.194.17.40:9200</a> -p 5601:5601 -d kibana:7.9.0</p>
-<p>5601是页面访问端口</p>
-</blockquote>
-<p>验证</p>
-<blockquote>
-<p>使用浏览器访问5601端口</p>
-</blockquote>
-<p><img src="/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/kibana-ok.png" alt="kibana-ok"></p>
+<h5 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h5><pre class="line-numbers language-none"><code class="language-none">echo $text1
+echo $&#123;text1&#125; ok? #可以使用大括号 方便字符串拼接<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
+<h5 id="设置只读"><a href="#设置只读" class="headerlink" title="设置只读"></a>设置只读</h5><pre class="line-numbers language-none"><code class="language-none">readonly text1 #设置完成后 不可再对变量赋值 会提示“.&#x2F;test.sh: line 7: text1: readonly variable”<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="删除变量"><a href="#删除变量" class="headerlink" title="删除变量"></a>删除变量</h5><pre class="line-numbers language-none"><code class="language-none">unset text1 #删除后 使用变量为空<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="变量类型"><a href="#变量类型" class="headerlink" title="变量类型"></a>变量类型</h5><blockquote>
+<p>变量默认被视为字符串。<br>除了字符串类型还有整数变量、数组变量、关联数组、环境变量、特殊变量</p>
+</blockquote>
+<h6 id="整数变量"><a href="#整数变量" class="headerlink" title="整数变量"></a>整数变量</h6><pre class="line-numbers language-none"><code class="language-none">declare -i my_integer&#x3D;42 #定义并且赋值一个整数变量<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h6 id="数组变量"><a href="#数组变量" class="headerlink" title="数组变量"></a>数组变量</h6><pre class="line-numbers language-none"><code class="language-none">my_array&#x3D;(1 2 3 4 5) #定义且赋值
+echo 所有元素：$&#123;my_array[*]&#125;
+echo 第二个元素：$&#123;my_array[1]&#125;
+# 获取数组长度
+length&#x3D;$&#123;#my_array[@]&#125;
+echo &quot;Number of array: $length&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="关联数组"><a href="#关联数组" class="headerlink" title="关联数组"></a>关联数组</h6><pre class="line-numbers language-none"><code class="language-none">declare -A map
+map[&#39;name&#39;]&#x3D;&quot;bob&quot;
+map[&#39;age&#39;]&#x3D;18
+map[&#39;city&#39;]&#x3D;&quot;NanJing&quot;
+
+echo $&#123;map[&quot;name&quot;]&#125;\&#39;s age is $&#123;map[&quot;age&quot;]&#125;
+echo &quot;数组map的元素为：&quot;$&#123;map[*]&#125;
+echo &quot;数组map的元素个数为：&quot;$&#123;#map[*]&#125;
+echo &quot;数组map键元素为：&quot;$&#123;!map[*]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h6><blockquote>
+<p>由操作系统或用户设置的特殊变量，用于配置 Shell 的行为和影响其执行环境</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">echo &quot;path:&quot;$&#123;PATH&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>特殊变量</p>
+<pre class="line-numbers language-none"><code class="language-none">echo $0 #脚本名称
+echo $? #表示上一个命令的退出状态，0表示没有错误，其他任何值表明有错误。
+echo $$ #脚本运行的当前进程ID号。
+echo $# #表示传递给脚本的参数数量
+echo $n #表示执行脚本第n个参数
+echo $* #将传递给脚本的所有参数合并为一个字符串输出
+#比如 .&#x2F;test.sh abc执行的话，echo $#返回1  echo $1返回abc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h4><h5 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h5><blockquote>
+<p>bash本身不支持数学运算，可以通过expr命令来实现</p>
+<p>完整表达式需要使用反引号&#96;包含</p>
+<p>运算符两侧要用空格隔开</p>
+<p>条件表达式要放在方括号[]之间，并且要有空格</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">declare -i a&#x3D;60
+declare -i b&#x3D;30
+val&#x3D;&#96;expr $&#123;a&#125; + $&#123;b&#125;&#96;
+echo &quot;a+b&#x3D;&quot;$&#123;val&#125; #加法
+echo &quot;a&#x2F;b&#x3D;&quot;&#96;expr $&#123;a&#125; &#x2F; $&#123;b&#125;&#96; #除法
+echo &quot;a*b&#x3D;&quot;&#96;expr $&#123;a&#125; * $&#123;b&#125;&#96; #乘法
+echo &quot;a%b&#x3D;&quot;&#96;expr $&#123;a&#125; % $&#123;b&#125;&#96; #取余
+echo &quot;a&#x3D;&#x3D;60 is &quot;&#96;expr $&#123;a&#125; &#x3D;&#x3D; 60&#96; #是否相等
+echo &quot;a&#x3D;&#x3D;59 is &quot;&#96;expr $&#123;a&#125; &#x3D;&#x3D; 59&#96;
+echo &quot;a!&#x3D;59 is &quot;&#96;expr $&#123;a&#125; !&#x3D; 59&#96; #是否不等于
+if [ $a &#x3D;&#x3D; 60 ]
+then
+    echo &quot;a等于60&quot;
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="关系运算"><a href="#关系运算" class="headerlink" title="关系运算"></a>关系运算</h5><pre class="line-numbers language-none"><code class="language-none">if [ $a -eq 60 ]
+then
+    echo -eq a等于60
+fi
+if [ $a -ne 60 ]
+then
+    echo -ne a不等于60
+else
+    echo &quot;-ne: a等于60&quot;
+fi
+if [ $a -gt 60 ]
+then
+    echo gt a大于60
+else
+    echo gt a不大于60
+fi
+if [ $a -lt 60 ]
+then
+    echo lt a小于60
+else
+    echo lt a不小于60
+fi
+if [ $a -ge 60 ]
+then
+    echo ge a大于等于60
+else
+    echo ge a小于60
+fi
+if [ $a -le 60 ]
+then
+    echo le a小于等于60
+else
+    echo le a大于60
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h5><blockquote>
+<p>用于if命令</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">if [ $a -ne 60 -o $b -eq 30 ]#或运算 有一个为真则为真
+then
+    echo -o a不等于60或者b等于30
+fi
+if [ $a -eq 60 -a $b -eq 30 ]#与运算 两个都为真才为真
+then
+    echo -o a等于60并且b等于30
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h5><blockquote>
+<p>用于连接命令</p>
+<p>&amp;&amp; 逻辑的AND  [[ $a -ne 60 &amp;&amp; $b -eq 30 ]] 返回false</p>
+<p>|| 逻辑的OR [[ $a -ne 60 || $b -eq 30 ]] 返回true</p>
+</blockquote>
+<h5 id="字符串运算符"><a href="#字符串运算符" class="headerlink" title="字符串运算符"></a>字符串运算符</h5><pre class="line-numbers language-none"><code class="language-none">c&#x3D;&quot;string1&quot;
+d&#x3D;&quot;string11&quot;
+e&#x3D;&quot;&quot;
+
+if [ $c &#x3D; string1 ]#是否相等
+then
+    echo &#x3D; c &#x3D; string1
+fi
+if [ $d &#x3D; string1 ]
+then
+    echo &#x3D; d &#x3D; string1
+else
+    echo &#x3D; d不等于string1
+fi
+if [ $d !&#x3D; string1 ]#是否不等
+then
+    echo !&#x3D; d 不等于 string1
+else
+    echo !&#x3D; d等于string1
+fi
+if [ -z $d ] #长度是否为0
+then
+    echo -z d的长度为0
+else
+    echo -z d的长度不为0
+fi
+if [ -z $e ]
+then
+    echo -z e的长度为0
+else
+    echo -z e的长度不为0
+fi
+if [ -n &quot;$d&quot; ] #长度是否不为0
+then
+    echo &quot;-n d的长度不为0&quot;
+else
+    echo &quot;-n d的长度为0&quot;
+fi
+if [ -n &quot;$e&quot; ]
+then
+    echo &quot;-n e的长度不为0&quot;
+else
+    echo &quot;-n e的长度为0&quot;
+fi
+
+if [ $d ] #是否为空
+then
+    echo &quot;$ d不为空&quot;
+else
+    echo &quot;$ d为空&quot;
+fi
+if [ $e ]
+then
+    echo &quot;$ e不为空&quot;
+else
+    echo &quot;$ e为空&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="文件测试运算符"><a href="#文件测试运算符" class="headerlink" title="文件测试运算符"></a>文件测试运算符</h5><blockquote>
+<p>文件测试运算符用于检测Unix文件的各种属性</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>-b file</th>
+<th>检测文件是否是块设备文件，如果是，则返回 true。</th>
+<th>[ -b $file ] 返回 false</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c file</td>
+<td>检测文件是否是字符设备文件，如果是，则返回 true。</td>
+<td>[ -c $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-d file</td>
+<td>检测文件是否是目录，如果是，则返回 true。</td>
+<td>[ -d $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td>
+<td>[ -f $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-g file</td>
+<td>检测文件是否设置了 SGID 位，如果是，则返回 true。</td>
+<td>[ -g $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-k file</td>
+<td>检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。</td>
+<td>[ -k $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-p file</td>
+<td>检测文件是否是有名管道，如果是，则返回 true。</td>
+<td>[ -p $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-u file</td>
+<td>检测文件是否设置了 SUID 位，如果是，则返回 true。</td>
+<td>[ -u $file ] 返回 false。</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>检测文件是否可读，如果是，则返回 true。</td>
+<td>[ -r $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>检测文件是否可写，如果是，则返回 true。</td>
+<td>[ -w $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>检测文件是否可执行，如果是，则返回 true。</td>
+<td>[ -x $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>检测文件是否为空（文件大小是否大于0），不为空返回 true。</td>
+<td>[ -s $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检测文件（包括目录）是否存在，如果是，则返回 true。</td>
+<td>[ -e $file ] 返回 true。</td>
+</tr>
+<tr>
+<td>-S file</td>
+<td>判断某文件是否 socket。</td>
+<td></td>
+</tr>
+<tr>
+<td>-L file</td>
+<td>检测文件是否存在并且是一个符号链接</td>
+<td></td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-none"><code class="language-none">if [ -r &#x2F;home&#x2F;zxin10&#x2F;test.sh ]
+then
+    echo &quot;readable&quot;
+else
+    echo &quot;unreadable&quot;
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h4><h5 id="显示普通字符串"><a href="#显示普通字符串" class="headerlink" title="显示普通字符串"></a>显示普通字符串</h5><pre class="line-numbers language-none"><code class="language-none">echo &quot;It is a test&quot;
+echo It is a test #与上面效果一致
+
+echo &quot;\&quot;It is a test\&quot;&quot; #显示转义字符串
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="显示变量"><a href="#显示变量" class="headerlink" title="显示变量"></a>显示变量</h5><pre class="line-numbers language-none"><code class="language-none">read name #从输入中读取赋值给name
+echo &quot;$name It is a test&quot; #显示输入 +“It is a test”<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="显示不换行"><a href="#显示不换行" class="headerlink" title="显示不换行"></a>显示不换行</h5><pre class="line-numbers language-none"><code class="language-none">echo -e &quot;OK! \c&quot; # -e 开启转义 \c 不换行
+echo &quot;It is a test&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="显示结果定向至文件"><a href="#显示结果定向至文件" class="headerlink" title="显示结果定向至文件"></a>显示结果定向至文件</h5><pre class="line-numbers language-none"><code class="language-none">echo &quot;It is a test&quot; &gt; myfile<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="原样输出字符串"><a href="#原样输出字符串" class="headerlink" title="原样输出字符串"></a>原样输出字符串</h5><blockquote>
+<h5 id="不进行转义或取变量-用单引号"><a href="#不进行转义或取变量-用单引号" class="headerlink" title="不进行转义或取变量(用单引号)"></a>不进行转义或取变量(用单引号)</h5></blockquote>
+<pre class="line-numbers language-none"><code class="language-none">echo &#39;$name\&quot;&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="显示命令执行结果"><a href="#显示命令执行结果" class="headerlink" title="显示命令执行结果"></a>显示命令执行结果</h5><blockquote>
+<p>使用反引号</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">echo &#96;date&#96;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h4><h5 id="if"><a href="#if" class="headerlink" title="if"></a>if</h5><blockquote>
+<p>使用fi结尾</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">if condition
+then
+    command1 
+    command2
+    ...
+    commandN 
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>写成一行</p>
+<pre class="line-numbers language-none"><code class="language-none">if [ $(ps -ef | grep -c &quot;ssh&quot;) -gt 1 ]; then echo &quot;true&quot;; fi<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h5><pre class="line-numbers language-none"><code class="language-none">if condition
+then
+    command1 
+    command2
+    ...
+    commandN
+else
+    command
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="if-else-if-else"><a href="#if-else-if-else" class="headerlink" title="if else-if else"></a>if else-if else</h5><pre class="line-numbers language-none"><code class="language-none">if condition1
+then
+    command1
+elif condition2 
+then 
+    command2
+else
+    commandN
+fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><pre class="line-numbers language-none"><code class="language-none">for var in item1 item2 ... itemN
+do
+    command1
+    command2
+    ...
+    commandN
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>写成一行：</p>
+<pre class="line-numbers language-none"><code class="language-none">for var in item1 item2 ... itemN; do command1; command2… done;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h4><h5 id="条件循环"><a href="#条件循环" class="headerlink" title="条件循环"></a>条件循环</h5><pre class="line-numbers language-none"><code class="language-none">while condition
+do
+    command
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h5><pre class="line-numbers language-none"><code class="language-none">while :
+do
+    command
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>或者</p>
+<pre class="line-numbers language-none"><code class="language-none">while true
+do
+    command
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>或者</p>
+<pre class="line-numbers language-none"><code class="language-none">for (( ; ; ))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="Until循环"><a href="#Until循环" class="headerlink" title="Until循环"></a>Until循环</h4><blockquote>
+<p>until 循环执行一系列命令直至条件为 true 时停止。与while相反。</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">until condition
+do
+    command
+done<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="case-…-esac"><a href="#case-…-esac" class="headerlink" title="case … esac"></a>case … esac</h4><blockquote>
+<p>与其他语言中的 switch … case 语句类似，是一种多分支选择结构，每个 case 分支用右圆括号开始，用两个分号 <strong>;;</strong> 表示 break，即执行结束，跳出整个 case … esac 语句，esac（就是 case 反过来）作为结束标记。</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">case 值 in
+模式1)
+    command1
+    command2
+    ...
+    commandN
+    ;;
+模式2)
+    command1
+    command2
+    ...
+    commandN
+    ;;
+esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">echo &#39;输入 1 到 4 之间的数字:&#39;
+echo &#39;你输入的数字为:&#39;
+read aNum
+case $aNum in
+  1) echo &#39;你选择了 1&#39;
+  ;;
+  2) echo &#39;你选择了 2&#39;
+  ;;
+  3) echo &#39;你选择了 3&#39;
+  ;;
+  4) echo &#39;你选择了 4&#39;
+  ;;
+  *) echo &#39;你没有输入 1 到 4 之间的数字&#39;
+  ;;
+esac<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="shell函数"><a href="#shell函数" class="headerlink" title="shell函数"></a>shell函数</h4><h5 id="函数定义"><a href="#函数定义" class="headerlink" title="函数定义"></a>函数定义</h5><pre class="line-numbers language-none"><code class="language-none">[  function ] funname [()]
+
+&#123;
+
+  action;
+
+  [return int;]
+
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>可以带 <strong>function fun()</strong> 定义，也可以直接 <strong>fun()</strong> 定义,不带任何参数。</p>
+</li>
+<li><p>参数返回，可以显示加：<strong>return</strong> 返回，如果不加，将以最后一条命令运行结果，作为返回值。 <strong>return</strong> 后跟数值 <strong>n(0-255)</strong>.</p>
+<p><strong>无返回样例</strong></p>
+</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">demoFun()&#123;
+  echo&quot;这是我的第一个 shell 函数!&quot;
+&#125;
+echo &quot;-----函数开始执行-----&quot;
+demoFun
+echo &quot;-----函数执行完毕-----&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>带return样例</strong></p>
+<blockquote>
+<p>函数返回值在调用该函数后通过 <strong>$?</strong> 来获得。</p>
+<p><strong>return</strong> 语句只能返回一个介于 0 到 255 之间的整数，而两个输入数字的和可能超过这个范围。</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">funWithReturn()&#123;
+  echo &quot;这个函数会对输入的两个数字进行相加运算...&quot;
+  echo &quot;输入第一个数字: &quot;
+  read aNum
+  echo &quot;输入第二个数字: &quot;
+  read anotherNum
+  echo &quot;两个数字分别为 $aNum 和 $anotherNum !&quot;
+  return $(($aNum+$anotherNum))
+&#125;
+funWithReturn
+echo &quot;输入的两个数字之和为 $? !&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h5><blockquote>
+<p>调用函数时可以向其传递参数。在函数体内部，通过 $n 的形式来获取参数的值，例如，$1表示第一个参数，$2表示第二个参数…</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">funWithParam()&#123;
+  echo &quot;第一个参数为 $1 !&quot;
+  echo &quot;第二个参数为 $2 !&quot;
+  echo &quot;第十个参数为 $10 !&quot;
+  echo &quot;第十个参数为 $&#123;10&#125; !&quot;
+  echo &quot;第十一个参数为 $&#123;11&#125; !&quot;
+  echo &quot;参数总数有 $# 个!&quot;
+  echo &quot;作为一个字符串输出所有参数 $* !&quot;
+&#125;
+funWithParam 1 2 3 4 5 6 7 8 9 34 73<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="输入输出重定向"><a href="#输入输出重定向" class="headerlink" title="输入输出重定向"></a>输入输出重定向</h4><table>
+<thead>
+<tr>
+<th>command &gt; file</th>
+<th>将输出重定向到 file。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>command &lt; file</td>
+<td>将输入重定向到 file。</td>
+</tr>
+<tr>
+<td>command &gt;&gt; file</td>
+<td>将输出以追加的方式重定向到 file。</td>
+</tr>
+<tr>
+<td>n &gt; file</td>
+<td>将文件描述符为 n 的文件重定向到 file。</td>
+</tr>
+<tr>
+<td>n &gt;&gt; file</td>
+<td>将文件描述符为 n 的文件以追加的方式重定向到 file。</td>
+</tr>
+<tr>
+<td>n &gt;&amp; m</td>
+<td>将输出文件 m 和 n 合并。</td>
+</tr>
+<tr>
+<td>n &lt;&amp; m</td>
+<td>将输入文件 m 和 n 合并</td>
+</tr>
+<tr>
+<td>&lt;&lt; tag</td>
+<td>将开始标记 tag 和结束标记 tag 之间的内容作为输入。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>0 是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">command1 &gt; file1  #执行command1然后将输出的内容存入file1  file1内的已经存在的内容将被新内容替代
+command1 &lt; file1  #从文件file1获取输入
+command 2&gt;file  #stderr 重定向到 file
+command &gt; file 2&gt;&amp;1 #将 stdout 和 stderr 合并后重定向到 file 或者 command &gt;&gt; file 2&gt;&amp;1
+command &lt; file1 &gt;file2  #将 stdin 重定向到 file1，将 stdout 重定向到 file2
+
+command &gt; &#x2F;dev&#x2F;null  #希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 &#x2F;dev&#x2F;null
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="shell文件包含"><a href="#shell文件包含" class="headerlink" title="shell文件包含"></a>shell文件包含</h4><blockquote>
+<p>和其他语言一样，Shell 也可以包含外部脚本。这样可以很方便的封装一些公用的代码作为一个独立的文件</p>
+</blockquote>
+<pre class="line-numbers language-none"><code class="language-none">. filename   # 注意点号(.)和文件名中间有一空格
+
+或
+
+source filename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -544,7 +1013,7 @@ discovery.zen.minimum_master_nodes: 1
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://kerwinjava.github.io/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/">https://kerwinjava.github.io/2023/12/11/es%E5%B0%B1%E8%BF%99%E4%B9%88%E8%B7%91%E8%B5%B7%E6%9D%A5%E4%BA%86/</a>
+                    <a href="https://kerwinjava.github.io/2024/02/21/image/shell%E8%AF%AD%E8%A8%80%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/">https://kerwinjava.github.io/2024/02/21/image/shell%E8%AF%AD%E8%A8%80%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -582,12 +1051,12 @@ discovery.zen.minimum_master_nodes: 1
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/es/">
-                                    <span class="chip bg-color">es</span>
+                                <a href="/tags/shell/">
+                                    <span class="chip bg-color">shell</span>
                                 </a>
                             
-                                <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
-                                    <span class="chip bg-color">开源软件</span>
+                                <a href="/tags/linux/">
+                                    <span class="chip bg-color">linux</span>
                                 </a>
                             
                         </div>
@@ -665,7 +1134,7 @@ discovery.zen.minimum_master_nodes: 1
         repo: 'KerwinJava.github.io',
         owner: 'KerwinJava',
         admin: "KerwinJava",
-        id: '2023-12-11T16-18-09',
+        id: '2024-02-21T16-55-09',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -960,9 +1429,68 @@ discovery.zen.minimum_master_nodes: 1
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/02/21/image/shell%E8%AF%AD%E8%A8%80%E8%84%9A%E6%9C%AC%E5%85%A5%E9%97%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="shell语言脚本入门">
+                        
+                        <span class="card-title">shell语言脚本入门</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-02-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/shell/" class="post-category">
+                                    shell
+                                </a>
+                            
+                            <a href="/categories/shell/linux%E8%84%9A%E6%9C%AC/" class="post-category">
+                                    linux脚本
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/shell/">
+                        <span class="chip bg-color">shell</span>
+                    </a>
+                    
+                    <a href="/tags/linux/">
+                        <span class="chip bg-color">linux</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2024/01/09/es%E5%AE%8C%E7%BE%8E%E6%94%AF%E6%8C%81%E6%96%87%E6%A1%A3%E7%9A%84%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">
                     <div class="card-image">
@@ -980,9 +1508,9 @@ discovery.zen.minimum_master_nodes: 1
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1004,63 +1532,6 @@ discovery.zen.minimum_master_nodes: 1
                     
                     <a href="/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/">
                         <span class="chip bg-color">开源软件</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/12/09/%E5%BA%94%E8%AF%A5%E6%98%AFspring%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B9%E6%B3%95%E4%BA%86/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="应该是Spring最重要的方法了">
-                        
-                        <span class="card-title">应该是Spring最重要的方法了</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-09
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/springboot%E6%BA%90%E7%A0%81/" class="post-category">
-                                    springboot源码
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%8D%9A%E5%AE%A2/">
-                        <span class="chip bg-color">博客</span>
-                    </a>
-                    
-                    <a href="/tags/springboot/">
-                        <span class="chip bg-color">springboot</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%BA%90%E7%A0%81/">
-                        <span class="chip bg-color">源码</span>
                     </a>
                     
                 </div>
